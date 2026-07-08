@@ -7,7 +7,7 @@ export default function OutfitCard({ outfit }) {
 
       {/* Outfit Image */}
       <div className="relative w-full h-80">
-        <img
+        <Image
           src={outfit.image}
           alt={outfit.title}
           fill
