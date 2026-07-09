@@ -1,102 +1,169 @@
 "use client";
+
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useOutfit } from "@/context/OutfitContext";
 import outfits from "@/data/outfits";
+import {
+  CalendarDays,
+  Star,
+  Heart,
+  ShoppingBag,
+  CircleCheck,
+  TriangleAlert,
+  CircleX,
+} from "lucide-react";
 
 export default function OutfitDetail() {
-    const { id } = useParams();
+  const { id } = useParams();
 
-    const outfit = outfits.find((item) => item.id === Number(id));
+  const outfit = outfits.find((item) => item.id === Number(id));
 
-    const { addFavorite, addToCollection } = useOutfit();
+  const {
+    favorites,
+    collection,
+    addFavorite,
+    addToCollection,
+  } = useOutfit();
 
-    if (!outfit) {
-        return (
-            <div className="flex items-center justify-center h-screen">
-                <h1 className="text-4xl font-bold text-red-500">
-                    Outfit Not Found
-                </h1>
-            </div>
-        );
-    }
-
+  if (!outfit) {
     return (
-        <section className="max-w-7xl mx-auto px-6 py-12">
+      <div className="flex items-center justify-center h-screen">
+        <h1 className="text-4xl font-bold text-red-500">
+          Outfit Not Found
+        </h1>
+      </div>
+    );
+  }
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+  const isFavorite = favorites.some(
+    (item) => item.id === outfit.id
+  );
 
-                {/* Image */}
-                <div className="relative w-full h-500px rounded-2xl overflow-hidden shadow-xl">
-                    <img
-                        src={outfit.image}
-                        alt={outfit.title}
-                        fill
-                        className="object-cover"
-                    />
-                </div>
+  const isCollected = collection.some(
+    (item) => item.id === outfit.id
+  );
 
+  const availabilityIcon =
+    outfit.availability === "In Stock" ? (
+      <CircleCheck size={20} />
+    ) : outfit.availability === "Low Stock" ? (
+      <TriangleAlert size={20} />
+    ) : (
+      <CircleX size={20} />
+    );
 
-                {/* Details */}
-                <div>
+  return (
+    <section className="max-w-7xl mx-auto px-6 py-12">
 
-                    <span className="inline-block bg-pink-100 text-pink-600 px-4 py-1 rounded-full font-semibold">
-                        {outfit.category}
-                    </span>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
-                    <h1 className="text-5xl font-bold mt-4">
-                        {outfit.title}
-                    </h1>
+        {/* Image */}
+        <div className="group relative w-full h-[500px] rounded-2xl overflow-hidden shadow-xl">
 
-                    <p className="text-gray-500 mt-2">
-                        🍂 {outfit.season}
-                    </p>
+          <Image
+            src={outfit.image}
+            alt={outfit.title}
+            fill
+            priority
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
+          />
 
-                    <p className="mt-6 text-gray-700 leading-8">
-                        {outfit.description}
-                    </p>
+        </div>
 
-                    <p className="text-4xl font-bold text-pink-600 mt-8">
-                        ₦{outfit.price.toLocaleString()}
-                    </p>
+        {/* Details */}
+        <div>
 
-                    <p className="mt-4 text-2xl text-yellow-500 font-semibold">
-                        ⭐ {outfit.rating} / 5
-                    </p>
+          {/* Category */}
+          <span className="inline-block bg-gradient-to-r from-pink-500 to-purple-600 text-white px-4 py-1 rounded-full font-semibold">
+            {outfit.category}
+          </span>
 
-                    <p
-                        className={`mt-2 text-lg font-semibold ${outfit.availability === "In Stock"
-                                ? "text-green-600"
-                                : outfit.availability === "Low Stock"
-                                    ? "text-orange-500"
-                                    : "text-red-600"
-                            }`}
-                    >
-                        {outfit.availability}
-                    </p>
+          {/* Title */}
+          <h1 className="text-5xl font-extrabold tracking-tight text-gray-900 mt-4">
+            {outfit.title}
+          </h1>
 
-                    <div className="flex flex-col sm:flex-row gap-4 mt-10">
+          {/* Season */}
+          <div className="flex items-center gap-2 mt-4 text-gray-500">
+            <CalendarDays size={20} />
+            <span>{outfit.season}</span>
+          </div>
 
-                        <button
-                            onClick={() => addFavorite(outfit)}
-                            className="bg-pink-600 hover:bg-pink-700 transition text-white px-8 py-4 rounded-xl"
-                        >
-                            ❤️ Add to Favorites
-                        </button>
+          {/* Description */}
+          <p className="mt-6 text-gray-700 leading-8">
+            {outfit.description}
+          </p>
 
-                        <button
-                            onClick={() => addToCollection(outfit)}
-                            className="bg-black hover:bg-gray-800 transition text-white px-8 py-4 rounded-xl"
-                        >
-                            👜 Add to Collection
-                        </button>
+          {/* Price */}
+          <p className="text-4xl font-extrabold text-pink-600 mt-8">
+            ₦{outfit.price.toLocaleString()}
+          </p>
 
-                    </div>
+          {/* Rating & Availability */}
+          <div className="flex items-center justify-between mt-8">
 
-                </div>
-
+            <div className="flex items-center gap-2 bg-yellow-100 text-yellow-700 px-4 py-2 rounded-full font-semibold">
+              <Star
+                size={20}
+                className="fill-yellow-400 text-yellow-400"
+              />
+              <span>{outfit.rating}/5</span>
             </div>
 
-        </section>
-    );
+            <div
+              className={`flex items-center gap-2 px-4 py-2 rounded-full font-semibold ${
+                outfit.availability === "In Stock"
+                  ? "bg-green-100 text-green-700"
+                  : outfit.availability === "Low Stock"
+                  ? "bg-orange-100 text-orange-600"
+                  : "bg-red-100 text-red-600"
+              }`}
+            >
+              {availabilityIcon}
+              <span>{outfit.availability}</span>
+            </div>
+
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 mt-10">
+
+            <button
+              onClick={() => addFavorite(outfit)}
+              disabled={isFavorite}
+              className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-semibold transition transform hover:scale-105 active:scale-95 ${
+                isFavorite
+                  ? "bg-pink-100 text-pink-600 cursor-not-allowed"
+                  : "bg-pink-600 text-white hover:bg-pink-700"
+              }`}
+            >
+              <Heart
+                size={20}
+                className={isFavorite ? "fill-pink-600" : ""}
+              />
+              {isFavorite ? "Favorited" : "Add to Favorites"}
+            </button>
+
+            <button
+              onClick={() => addToCollection(outfit)}
+              disabled={isCollected}
+              className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-semibold transition transform hover:scale-105 active:scale-95 ${
+                isCollected
+                  ? "bg-gray-200 text-gray-700 cursor-not-allowed"
+                  : "bg-black text-white hover:bg-gray-800"
+              }`}
+            >
+              <ShoppingBag size={20} />
+              {isCollected ? "Saved" : "Save Look"}
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+  );
 }

@@ -1,4 +1,5 @@
 import "./globals.css";
+import { Toaster } from "react-hot-toast";
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -12,13 +13,20 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-gray-100">
-        <OutfitProvider>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-        </OutfitProvider>
-      </body>
+      
+      
+        <body className="bg-gray-100">
+          <OutfitProvider>
+            <Toaster
+              position="top-right"
+              reverseOrder={false}
+            />
+
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </OutfitProvider>
+        </body>
     </html>
   );
 }

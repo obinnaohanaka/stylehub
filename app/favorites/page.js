@@ -1,78 +1,102 @@
 "use client";
+
 import Image from "next/image";
+import { Heart, CalendarDays, Trash2 } from "lucide-react";
 import { useOutfit } from "@/context/OutfitContext";
 
 export default function FavoritesPage() {
-    const { favorites, removeFavorite } = useOutfit();
+  const { favorites, removeFavorite } = useOutfit();
+  const addFavorite = (outfit) => {
+  console.log("Favorite clicked:", outfit);
 
-    return (
-        <section className="max-w-7xl mx-auto px-6 py-10">
-            {/* Page Title */}
-            <h1 className="text-4xl font-bold text-center mb-2">
-                ❤️ Favorite Looks
-            </h1>
+  if (!favorites.find((item) => item.id === outfit.id)) {
+    setFavorites((prev) => [...prev, outfit]);
+  }
+};
 
-            <p className="text-center text-gray-500 mb-10">
-                Your favorite fashion picks, all in one place.
-            </p>
+  return (
+    <section className="max-w-7xl mx-auto px-6 py-10">
+      {/* Page Title */}
+      <div className="flex items-center justify-center gap-3 mb-2">
+        <Heart
+          size={34}
+          className="fill-pink-600 text-pink-600"
+        />
 
-            {favorites.length === 0 ? (
-                <div className="text-center py-20">
-                    <h2 className="text-3xl font-bold text-gray-600">
-                        No Favorite Outfits Yet ❤️
-                    </h2>
+        <h1 className="text-4xl font-bold">
+          Favorite Looks
+        </h1>
+      </div>
 
-                    <p className="mt-4 text-gray-500">
-                        Explore the latest styles and save the outfits you love.
-                    </p>
+      <p className="text-center text-gray-500 mb-10">
+        Your favorite fashion picks, all in one place.
+      </p>
+
+      {favorites.length === 0 ? (
+        <div className="text-center py-20">
+          <div className="flex justify-center mb-4">
+            <Heart
+              size={50}
+              className="text-pink-500"
+            />
+          </div>
+
+          <h2 className="text-3xl font-bold text-gray-600">
+            No Favorite Outfits Yet
+          </h2>
+
+          <p className="mt-4 text-gray-500">
+            Explore the latest styles and save the outfits you love.
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {favorites.map((outfit) => (
+            <div
+              key={outfit.id}
+              className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
+            >
+              {/* Outfit Image */}
+              <div className="relative w-full h-80">
+                <Image
+                  src={outfit.image}
+                  alt={outfit.title}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+
+              {/* Card Content */}
+              <div className="p-5">
+                <span className="inline-block bg-pink-100 text-pink-600 text-sm font-semibold px-3 py-1 rounded-full">
+                  {outfit.category}
+                </span>
+
+                <h2 className="text-2xl font-bold text-black mt-4">
+                  {outfit.title}
+                </h2>
+
+                <div className="flex items-center gap-2 mt-2 text-gray-500">
+                  <CalendarDays size={18} />
+                  <span>{outfit.season}</span>
                 </div>
-            ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {favorites.map((outfit) => (
-                        <div
-                            key={outfit.id}
-                            className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
-                        >
-                            {/* Outfit Image */}
-                            <div className="relative w-full h-80">
-                                <image
-                                    src={outfit.image}
-                                    alt={outfit.title}
-                                    fill
-                                    className="object-cover"
-                                />
-                            </div>
 
+                <p className="text-pink-600 text-2xl font-bold mt-5">
+                  ₦{outfit.price.toLocaleString()}
+                </p>
 
-                            {/* Card Content */}
-                            <div className="p-5">
-                                <span className="inline-block bg-pink-100 text-pink-600 text-sm font-semibold px-3 py-1 rounded-full">
-                                    {outfit.category}
-                                </span>
-
-                                <h2 className="text-2xl font-bold mt-4">
-                                    {outfit.title}
-                                </h2>
-
-                                <p className="text-gray-500 mt-2">
-                                    🍂 {outfit.season}
-                                </p>
-
-                                <p className="text-pink-600 text-2xl font-bold mt-5">
-                                    ₦{outfit.price.toLocaleString()}
-                                </p>
-
-                                <button
-                                    onClick={() => removeFavorite(outfit.id)}
-                                    className="w-full mt-6 bg-red-500 hover:bg-red-600 text-white py-3 rounded-xl transition"
-                                >
-                                    Remove from Favorites
-                                </button>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            )}
-        </section>
-    );
+                <button
+                  onClick={() => removeFavorite(outfit.id)}
+                  className="w-full mt-6 flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white py-3 rounded-xl transition"
+                >
+                  <Trash2 size={18} />
+                  Remove from Favorites
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </section>
+  );
 }
