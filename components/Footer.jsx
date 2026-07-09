@@ -10,7 +10,7 @@ export default function Footer() {
           {/* Logo & Description */}
           <div className="text-center md:text-left">
             <h2 className="text-2xl font-bold text-pink-400">
-              👗 StyleHub
+              StyleHub
             </h2>
 
             <p className="mt-2 text-gray-300 max-w-sm">
