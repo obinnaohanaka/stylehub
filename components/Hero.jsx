@@ -12,9 +12,12 @@ export default function Hero() {
           Discover stylish outfits for every occasion and build your own personal lookbook.
         </p>
 
-        <button className="mt-10 bg-white text-pink-600 px-8 py-4 rounded-full font-bold hover:scale-105 transition">
+        <a
+          href="#outfits"
+          className="inline-block bg-pink-600 text-white px-8 py-3 rounded-xl hover:bg-pink-700 transition"
+        >
           Explore Collection
-        </button>
+        </a>
 
       </div>
 

@@ -13,7 +13,7 @@ export default function Header() {
         {/* Logo */}
         <Link href="/">
           <h1 className="text-3xl font-extrabold text-pink-600 cursor-pointer">
-            👗 StyleHub
+            ...StyleHub
           </h1>
         </Link>
 
@@ -29,16 +29,16 @@ export default function Header() {
 
           <Link
             href="/favorites"
-            className="font-medium hover:text-pink-600 transition"
+            className="text-gray-800 hover:text-pink-600 font-semibold transition"
           >
-            ❤️ Favorites ({favorites.length})
+            ❤️ Favorites
           </Link>
 
           <Link
             href="/collection"
-            className="font-medium hover:text-pink-600 transition"
+            className="text-gray-800 hover:text-pink-600 font-semibold transition"
           >
-            👜 Collection ({collection.length})
+            👜 Collection
           </Link>
 
         </nav>

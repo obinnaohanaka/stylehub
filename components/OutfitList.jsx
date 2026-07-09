@@ -32,7 +32,9 @@ export default function OutfitList() {
   });
 
   return (
-    <section className="max-w-7xl mx-auto py-10 px-4">
+    <section id="outfits"
+      className="max-w-7xl mx-auto py-10 px-4"
+    >
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredOutfits.map((outfit) => (

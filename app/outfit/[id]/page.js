@@ -27,7 +27,7 @@ export default function OutfitDetail() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
 
                 {/* Image */}
-                <div className="relative w-full h-[500px] rounded-2xl overflow-hidden shadow-xl">
+                <div className="relative w-full h-500px rounded-2xl overflow-hidden shadow-xl">
                     <img
                         src={outfit.image}
                         alt={outfit.title}
@@ -58,6 +58,21 @@ export default function OutfitDetail() {
 
                     <p className="text-4xl font-bold text-pink-600 mt-8">
                         ₦{outfit.price.toLocaleString()}
+                    </p>
+
+                    <p className="mt-4 text-2xl text-yellow-500 font-semibold">
+                        ⭐ {outfit.rating} / 5
+                    </p>
+
+                    <p
+                        className={`mt-2 text-lg font-semibold ${outfit.availability === "In Stock"
+                                ? "text-green-600"
+                                : outfit.availability === "Low Stock"
+                                    ? "text-orange-500"
+                                    : "text-red-600"
+                            }`}
+                    >
+                        {outfit.availability}
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4 mt-10">

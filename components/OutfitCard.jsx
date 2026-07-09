@@ -22,9 +22,8 @@ export default function OutfitCard({ outfit }) {
         <span className="inline-block bg-pink-100 text-pink-600 text-sm font-semibold px-3 py-1 rounded-full">
           {outfit.category}
         </span>
-
-        {/* Title */}
-        <h2 className="text-2xl font-bold mt-4">
+        
+        <h2 className="text-2xl font-extrabold tracking-tight text-gray-900 mt-4">
           {outfit.title}
         </h2>
 
@@ -41,6 +40,23 @@ export default function OutfitCard({ outfit }) {
         {/* Price */}
         <p className="text-pink-600 text-2xl font-bold mt-5">
           ₦{outfit.price.toLocaleString()}
+        </p>
+
+        {/* Rating */}
+        <p className="mt-2 text-yellow-500 font-semibold">
+          ⭐ {outfit.rating} / 5
+        </p>
+
+        {/* Availability */}
+        <p
+          className={`mt-2 font-semibold ${outfit.availability === "In Stock"
+            ? "text-green-600"
+            : outfit.availability === "Low Stock"
+              ? "text-orange-500"
+              : "text-red-600"
+            }`}
+        >
+          {outfit.availability}
         </p>
 
         {/* Button */}
