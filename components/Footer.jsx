@@ -13,9 +13,12 @@ export default function Footer() {
               StyleHub
             </h2>
 
-            <p className="mt-2 text-gray-300 max-w-sm">
-              Discover fashionable outfits for every season and build your
-              personal lookbook with StyleHub.
+            <p className="mt-2 text-sm text-gray-400">
+              Designed & Developed by <span className="font-semibold text-white">Obinna Ohanaka</span>
+            </p>
+
+            <p className="text-sm text-gray-500">
+              @Fullstack Developer.
             </p>
           </div>
 
