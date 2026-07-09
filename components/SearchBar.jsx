@@ -16,11 +16,11 @@ export default function SearchBar() {
           w-full
           rounded-xl
           border
-          border-gray-300
+          border-gray-600
           bg-gray-800
           px-5
           py-4
-          text-gray-800
+          text-white
           placeholder:text-gray-400
           shadow-sm
           transition
