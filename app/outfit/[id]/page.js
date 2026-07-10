@@ -80,7 +80,7 @@ export default function OutfitDetail() {
           </span>
 
           {/* Title */}
-          <h1 className="text-5xl font-extrabold tracking-tight text-gray-900 mt-4">
+          <h1 className="text-5xl font-extrabold tracking-tight text-white mt-4">
             {outfit.title}
           </h1>
 

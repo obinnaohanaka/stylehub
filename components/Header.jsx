@@ -14,7 +14,7 @@ export default function Header() {
         {/* Logo */}
         <Link href="/">
           <h1 className="text-3xl font-extrabold text-pink-600 cursor-pointer">
-            StyleHub
+            ...StyleHub
           </h1>
         </Link>
 

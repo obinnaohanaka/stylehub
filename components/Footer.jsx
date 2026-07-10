@@ -23,7 +23,7 @@ export default function Footer() {
           </div>
 
           {/* Navigation */}
-          <div className="flex gap-6 text-gray-300">
+          {/* <div className="flex gap-6 text-gray-300">
             <Link href="/" className="hover:text-pink-400 transition">
               Home
             </Link>
@@ -35,7 +35,7 @@ export default function Footer() {
             <Link href="/collection" className="hover:text-pink-400 transition">
               Collection
             </Link>
-          </div>
+          </div> */}
 
         </div>
 
