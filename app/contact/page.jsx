@@ -1,5 +1,7 @@
 "use client";
+
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
 import toast from "react-hot-toast";
 import {
     Mail,
@@ -13,59 +15,69 @@ export default function ContactPage() {
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
 
-    const handleSendMessage = (e) => {
+    const handleSendMessage = async (e) => {
         e.preventDefault();
 
-        if (
-            name.trim() === "" ||
-            email.trim() === "" ||
-            message.trim() === ""
-        ) {
+        if (!name || !email || !message) {
             toast.error("Please fill in all the fields.");
             return;
         }
 
-        toast.success(
-            "✅ Message sent successfully! We'll respond to you soon."
-        );
+        try {
+            await emailjs.send(
+                process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+                process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+                {
+                    from_name: name,
+                    from_email: email,
+                    message: message,
+                },
+                process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+            );
 
-        setName("");
-        setEmail("");
-        setMessage("");
+            toast.success(
+                "Message sent successfully! We'll respond to you soon."
+            );
+
+            setName("");
+            setEmail("");
+            setMessage("");
+        } catch (error) {
+            console.error("EmailJS Error:", error);
+
+            toast.error(
+                error?.text ||
+                error?.message ||
+                "Something went wrong. Please try again."
+            );
+        }
     };
-
-
-
 
     return (
         <section className="max-w-5xl mx-auto px-6 py-16">
-
             <div className="text-center">
-
                 <h1 className="text-5xl font-extrabold">
                     Contact Me
                 </h1>
 
-                <p className="text-gray-200 mt-4">
+                <p className="text-gray-600 mt-4">
                     Have feedback or would like to connect?
                     I'd love to hear from you.
                 </p>
-
             </div>
 
             <div className="bg-white rounded-2xl shadow-lg p-10 mt-12">
-
-                <div className="space-y-6">
-
+                {/* Contact Info */}
+                <div className="space-y-6 mb-10">
                     <div className="flex items-center text-pink-600 gap-4">
-                        <User className="text-pink-600" />
+                        <User />
                         <span>Obinna Ohanaka</span>
                     </div>
 
                     <div className="flex items-center gap-4">
                         <Mail className="text-pink-600" />
                         <a
-                            href="mailto:obinna.c.ohanaka@gmail.com.com"
+                            href="mailto:obinna.c.ohanaka@gmail.com"
                             className="text-pink-600 hover:underline"
                         >
                             obinna.c.ohanaka@gmail.com
@@ -80,17 +92,16 @@ export default function ContactPage() {
                             rel="noopener noreferrer"
                             className="text-pink-600 hover:underline"
                         >
-                            Globe
+                            github.com/obinnaohanaka
                         </a>
                     </div>
-
                 </div>
 
+                {/* Contact Form */}
                 <form
                     onSubmit={handleSendMessage}
                     className="space-y-6"
                 >
-
                     <input
                         type="text"
                         placeholder="Your Name"
@@ -125,11 +136,8 @@ export default function ContactPage() {
                         <Send size={18} />
                         Send Message
                     </button>
-
                 </form>
-
             </div>
-
         </section>
     );
 }
