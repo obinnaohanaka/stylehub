@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
 
           {/* Logo & Description */}
-          <div className="text-center md:text-left">
+          {/* <div className="text-center md:text-left">
             <h2 className="text-2xl font-bold text-pink-400">
               StyleHub
             </h2>
@@ -20,7 +20,7 @@ export default function Footer() {
             <p className="text-sm text-gray-500">
               @Fullstack Developer.
             </p>
-          </div>
+          </div> */}
 
           {/* Navigation */}
           {/* <div className="flex gap-6 text-gray-300">
@@ -44,7 +44,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <p className="text-center text-gray-400 text-sm">
-          © {new Date().getFullYear()} StyleHub. Built with Next.js, React and Tailwind CSS.
+          © {new Date().getFullYear()} StyleHub. All rights reserved.
         </p>
 
       </div>
